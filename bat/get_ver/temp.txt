@@ -1,1 +1,42 @@
+--------------------------------------------------
+get_ver_cliant.bat
+--------------------
+rem @echo off
 
+ver | findstr /v /r "^$" > c:\temp\ver.txt
+
+pause
+--------------------------------------------------
+get_ver_parent.bat
+--------------------
+rem @echo off
+
+set "LIST_FILE=ip_list.txt"
+
+for /f "tokens=*" %%i in (%LIST_FILE%) do (
+    cmd /c "%%i\temp\get_ver_cliant.bat"
+    type %%i\temp\ver.txt >> %USERPROFILE%\Desktop\ver.csv
+)
+
+pause
+--------------------------------------------------
+ip_list.txt
+--------------------
+\\192.168.10.3
+--------------------------------------------------
+ip_shutdown.bat
+--------------------
+rem @echo off
+
+set "LIST_FILE=ip_list.txt"
+
+for /f "tokens=*" %%i in (%LIST_FILE%) do (
+    cmd /c "%%i\temp\shutdown.bat"
+)
+
+pause
+--------------------------------------------------
+shutdown.bat
+--------------------
+shutdown /s /t 0
+--------------------------------------------------
